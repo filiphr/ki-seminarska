@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpCamera.Finder", "..\KISeminarskaIpCamera\IpCamera.Finder\IpCamera.Finder.csproj", "{BD904E11-66F1-4C15-96F9-7F0E4CAFF28A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpCamera.Finder", "IpCamera.Finder\IpCamera.Finder.csproj", "{BD904E11-66F1-4C15-96F9-7F0E4CAFF28A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpCamera.Finder.Test", "..\KISeminarskaIpCamera\IpCamera.Finder.Test\IpCamera.Finder.Test.csproj", "{A06E23F4-E28E-4A81-9477-716822B36FD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpCamera.Finder.Test", "IpCamera.Finder.Test\IpCamera.Finder.Test.csproj", "{A06E23F4-E28E-4A81-9477-716822B36FD5}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
