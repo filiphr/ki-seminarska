@@ -1,0 +1,1 @@
+﻿The responsibility of the "Finder" will be to scan and find the camera that is attached to the local router.
