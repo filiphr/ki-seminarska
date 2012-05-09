@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using IpCamera.Controler;
-using System.Runtime.Serialization;
 
 namespace IpCamera.Finder.Test
 {
@@ -11,19 +11,28 @@ namespace IpCamera.Finder.Test
     public class Cameras
     {
         #region Parametars
+
         /// <summary>
-        /// A list of all the cameras in the 
+        /// A list of all the cameras in the
         /// </summary>
         public List<INetworkCamera> cameras { get; set; }
-        #endregion
+
+        /// <summary>
+        /// The image path for the plan
+        /// </summary>
+        public string imagePath { get; set; }
+
+        #endregion Parametars
 
         #region Construcors
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public Cameras()
         {
             this.cameras = new List<INetworkCamera>();
+            this.imagePath = string.Empty;
         }
 
         /// <summary>
@@ -33,9 +42,10 @@ namespace IpCamera.Finder.Test
         public Cameras(List<INetworkCamera> cameras)
         {
             this.cameras = cameras;
+            this.imagePath = string.Empty;
         }
 
-                /// <summary>
+        /// <summary>
         /// Deserialization constructor
         /// </summary>
         /// <param name="info">Serialization Info</param>
@@ -43,12 +53,15 @@ namespace IpCamera.Finder.Test
         public Cameras(SerializationInfo info, StreamingContext ctxt)
         {
             this.cameras = (List<INetworkCamera>)info.GetValue("cameras", typeof(List<INetworkCamera>));
+            this.imagePath = (string)info.GetValue("imagePath", typeof(string));
         }
-        #endregion
+
+        #endregion Construcors
 
         #region Methods
+
         /// <summary>
-        /// Checks ig this camera exists in the list of cameras
+        /// Checks if this camera exists in the list of cameras
         /// </summary>
         /// <param name="camera">Camera</param>
         /// <returns>True if the camera is in the list, false if it isn't</returns>
@@ -67,7 +80,9 @@ namespace IpCamera.Finder.Test
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("cameras", this.cameras);
+            info.AddValue("imagePath", this.cameras);
         }
-        #endregion
+
+        #endregion Methods
     }
 }

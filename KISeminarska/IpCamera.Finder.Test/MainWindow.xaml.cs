@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using IpCamera.Controler;
@@ -20,7 +21,6 @@ namespace IpCamera.Finder.Test
     public partial class MainWindow : Window
     {
         public static Cameras ActiveCameras = new Cameras();
-        //public static List<INetworkCamera> ActiveCameras = new List<INetworkCamera>();
         public static int selectedCameraIndex = -1;
 
         public MainWindow()
@@ -41,7 +41,17 @@ namespace IpCamera.Finder.Test
 
         private void btnDetectCameras_Click(object sender, RoutedEventArgs e)
         {
-            detectCameras();
+            Cursor = Cursors.Wait;
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                detectCameras();
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+                Cursor = Cursors.Arrow;
+            }
         }
 
         private void btnTakePicture_Click(object sender, RoutedEventArgs e)
@@ -50,13 +60,6 @@ namespace IpCamera.Finder.Test
             Image picture = new Image();
             BitmapSource bs = BitmapConversion.ToWpfBitmap(camera.TakePicture());
             picture.Source = bs;
-
-            //int picHeight = camera.height;
-            //int picWidth = camera.width;
-            //imgPicture.Width = picWidth;
-            //imgPicture.Height = picHeight;
-            //brdPicture.Width = picWidth;
-            //brdPicture.Height = picHeight;
             imgPicture.Source = bs;
         }
 
@@ -149,7 +152,7 @@ namespace IpCamera.Finder.Test
                     {
                         formatter.Serialize(stream, ActiveCameras);
                     }
-                    catch (Exception exp) { txtIPlist.Text += exp.Message; }
+                    catch (Exception exp) { }
                 }
             }
         }
@@ -171,7 +174,7 @@ namespace IpCamera.Finder.Test
                     {
                         ActiveCameras = (Cameras)formatter.Deserialize(stream);
                     }
-                    catch (Exception exp) { txtIPlist.Text += exp.Message; }
+                    catch (Exception exp) { }
                 }
                 if (ActiveCameras.cameras.Count != 0)
                 {
@@ -203,5 +206,3 @@ namespace IpCamera.Finder.Test
         }
     }
 }
-
-

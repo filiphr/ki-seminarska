@@ -15,13 +15,14 @@ namespace IpCamera.Controler
     public interface INetworkCamera : ISerializable
     {
         #region Parametars
+
         /// <summary>
         /// The camera ID, usualy the MAC address
         /// </summary>
         string ID { get; set; }
 
         /// <summary>
-        /// The camera IP address 
+        /// The camera IP address
         /// </summary>
         string IP { get; set; }
 
@@ -54,14 +55,26 @@ namespace IpCamera.Controler
         /// Image height
         /// </summary>
         int height { get; set; }
-        
+
+        /// <summary>
+        /// Image location - X coord
+        /// </summary>
+        int X { get; set; }
+
+        /// <summary>
+        /// Image location - Y coord
+        /// </summary>
+        int Y { get; set; }
+
         /// <summary>
         /// Camera network credentials
         /// </summary>
         NetworkCredential credentials { get; set; }
-        #endregion
+
+        #endregion Parametars
 
         #region Methods
+
         /// <summary>
         /// Returns a picture from the network camera
         /// </summary>
@@ -108,6 +121,7 @@ namespace IpCamera.Controler
         /// Set the image size
         /// </summary>
         void setImageSize();
-        #endregion
+
+        #endregion Methods
     }
 }

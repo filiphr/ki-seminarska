@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
-using System.IO;
-using System.Drawing;
 using System.Diagnostics;
-using IpCamera.Finder;
-using System.Windows.Media.Imaging;
-using System.Windows;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
-
-
+using System.Text;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using IpCamera.Finder;
 
 namespace IpCamera.Controler.Cameras
 {
@@ -19,6 +17,7 @@ namespace IpCamera.Controler.Cameras
     public class EdimaxIC3010 : INetworkCamera
     {
         #region CGI querries
+
         /// <summary>
         /// CGI command for getting the MAC Address od the IP Camera
         /// </summary>
@@ -38,16 +37,18 @@ namespace IpCamera.Controler.Cameras
         /// CGI command for getting the JPEG image resolution
         /// </summary>
         private const string CameraJpegConfig_IP0 = "http://{0}/camera-cgi/admin/param.cgi?action=list&group= Image.I0.Appearance";
-        #endregion
+
+        #endregion CGI querries
 
         #region Parametars
+
         /// <summary>
         /// The camera ID, usualy the MAC address
         /// </summary>
         public string ID { get; set; }
 
         /// <summary>
-        /// The camera IP address 
+        /// The camera IP address
         /// </summary>
         public string IP { get; set; }
 
@@ -82,12 +83,24 @@ namespace IpCamera.Controler.Cameras
         public int height { get; set; }
 
         /// <summary>
+        /// Image location - X coord
+        /// </summary>
+        public int X { get; set; }
+
+        /// <summary>
+        /// Image location - Y coord
+        /// </summary>
+        public int Y { get; set; }
+
+        /// <summary>
         /// Camera network credentials
         /// </summary>
         public NetworkCredential credentials { get; set; }
-        #endregion
 
-        #region  Constructors
+        #endregion Parametars
+
+        #region Constructors
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -108,6 +121,8 @@ namespace IpCamera.Controler.Cameras
             this.connected = newConnected;
             this.description = string.Empty;
             this.credentials = new NetworkCredential("admin", "1234");
+            this.X = 200;
+            this.Y = 600;
         }
 
         /// <summary>
@@ -128,8 +143,11 @@ namespace IpCamera.Controler.Cameras
             this.credentials = new NetworkCredential();
             this.credentials.UserName = (string)info.GetValue("username", typeof(string));
             this.credentials.Password = (string)info.GetValue("password", typeof(string));
+            this.X = (int)info.GetValue("X", typeof(int));
+            this.Y = (int)info.GetValue("Y", typeof(int));
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods
 
@@ -157,7 +175,7 @@ namespace IpCamera.Controler.Cameras
                 // get response stream
                 using (Stream stream = response.GetResponseStream())
                 {
-                    // read data from stream                                
+                    // read data from stream
                     StreamReader reader = new StreamReader(stream);
                     while ((read = stream.Read(buffer, total, 1000)) != 0)
                     {
@@ -353,7 +371,7 @@ namespace IpCamera.Controler.Cameras
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="info"></param>
         /// <param name="ctxt"></param>
@@ -369,7 +387,10 @@ namespace IpCamera.Controler.Cameras
             info.AddValue("height", this.height);
             info.AddValue("username", this.credentials.UserName);
             info.AddValue("password", this.credentials.Password);
+            info.AddValue("X", this.X);
+            info.AddValue("Y", this.Y);
         }
-        #endregion
+
+        #endregion Methods
     }
 }

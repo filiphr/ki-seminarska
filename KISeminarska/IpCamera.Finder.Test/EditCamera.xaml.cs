@@ -9,11 +9,13 @@ namespace IpCamera.Finder.Test
     public partial class EditCamera : Window
     {
         #region Parametars
+
         /// <summary>
         /// The camera that is being edited
         /// </summary>
         private INetworkCamera camera { get; set; }
-        #endregion
+
+        #endregion Parametars
 
         public EditCamera()
         {
