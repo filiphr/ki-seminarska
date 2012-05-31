@@ -10,12 +10,11 @@
         <Border Name="imgBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="7">
             <Image Name="imgPicture" Stretch="Uniform"/>
         </Border>
-        <Border Name="canvasBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="7">
+        <Border Name="canvasBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="7" Visibility="Collapsed">
             <Canvas Name="cnvPlan" Grid.Column="1" Visibility="Visible" AllowDrop="True" Drop="dropCamera" Background="Black">
-                <Image Name="imgCamera" Source="activeCamera.png" MouseLeftButtonDown="dragCamera"></Image>
             </Canvas>
         </Border>
-        
+
         <Grid Grid.Column="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

@@ -9,10 +9,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using IpCamera.Controler;
-using System.Windows.Media;
 
 namespace IpCamera.Finder.Test
 {
@@ -25,8 +25,8 @@ namespace IpCamera.Finder.Test
         public static int selectedCameraIndex = -1;
 
         private static string dir = Directory.GetCurrentDirectory();
-        private static string inactiveCameraPath = Path.Combine(dir, "inactiveCameras.png");
-        private static string activeCameraPath = Path.Combine(dir, "activeCameras.png");
+        private static string inactiveCameraPath = Path.Combine(dir, "inactiveCamera.png");
+        private static string activeCameraPath = Path.Combine(dir, "activeCamera.png");
 
         public MainWindow()
         {
@@ -132,7 +132,7 @@ namespace IpCamera.Finder.Test
             for (int i = 0; i < ActiveCameras.cameras.Count; i++)
             {
                 Image image = new Image();
-                if (cbCameras.SelectedIndex == i)
+                if (cbCameras.SelectedIndex == i + 1)
                 {
                     image.Source = bmpActive;
                 }
@@ -248,7 +248,6 @@ namespace IpCamera.Finder.Test
                 canvasBorder.Visibility = System.Windows.Visibility.Visible;
                 //cnvPlan.Visibility = System.Windows.Visibility.Visible;
                 btnPlan.Content = UI_main.hidePlan;
-
             }
             else if (btnPlan.Content == UI_main.hidePlan)
             {
@@ -262,7 +261,7 @@ namespace IpCamera.Finder.Test
 
         private void dragCamera(object sender, MouseButtonEventArgs e)
         {
-           // Image image = e.Source as Image;
+            // Image image = e.Source as Image;
             Image image = sender as Image;
             DataObject data = new DataObject(typeof(Image), image);
             DragDrop.DoDragDrop(image, data, DragDropEffects.Move);
@@ -289,8 +288,6 @@ namespace IpCamera.Finder.Test
                     cam.Y = e.GetPosition(this.cnvPlan).Y;
                 }
             }
-            lblResolution.Content = image.Name;
-           
         }
     }
 }
