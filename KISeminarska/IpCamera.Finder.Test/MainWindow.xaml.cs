@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using IpCamera.Controler;
+using System.Windows.Media;
 
 namespace IpCamera.Finder.Test
 {
@@ -22,6 +23,10 @@ namespace IpCamera.Finder.Test
     {
         public static Cameras ActiveCameras = new Cameras();
         public static int selectedCameraIndex = -1;
+
+        private static string dir = Directory.GetCurrentDirectory();
+        private static string inactiveCameraPath = Path.Combine(dir, "inactiveCameras.png");
+        private static string activeCameraPath = Path.Combine(dir, "activeCameras.png");
 
         public MainWindow()
         {
@@ -117,6 +122,32 @@ namespace IpCamera.Finder.Test
             fillInfo();
         }
 
+        private void drawCameras()
+        {
+            BitmapImage bmpInactive = new BitmapImage(new Uri(inactiveCameraPath));
+            BitmapImage bmpActive = new BitmapImage(new Uri(activeCameraPath));
+
+            double offset = bmpInactive.Width;
+
+            for (int i = 0; i < ActiveCameras.cameras.Count; i++)
+            {
+                Image image = new Image();
+                if (cbCameras.SelectedIndex == i)
+                {
+                    image.Source = bmpActive;
+                }
+                else
+                {
+                    image.Source = bmpInactive;
+                }
+                image.Tag = ActiveCameras.cameras[i].ID;
+                image.MouseLeftButtonDown += new MouseButtonEventHandler(dragCamera);
+                Canvas.SetLeft(image, ActiveCameras.cameras[i].X);
+                Canvas.SetTop(image, ActiveCameras.cameras[i].Y);
+                this.cnvPlan.Children.Add(image);
+            }
+        }
+
         private void fillInfo()
         {
             if (cbCameras.SelectedIndex > 0)
@@ -181,6 +212,7 @@ namespace IpCamera.Finder.Test
                 {
                     selectedCameraIndex = -1;
                     fillCameras();
+                    drawCameras();
                     btnTakePicture.IsEnabled = false;
                     btnEdit.IsEnabled = false;
                 }
@@ -204,22 +236,61 @@ namespace IpCamera.Finder.Test
                 }
             }
             fillCameras();
+            drawCameras();
         }
 
         private void btnPlan_Click(object sender, RoutedEventArgs e)
         {
             if (btnPlan.Content == UI_main.showPlan)
             {
-                imgPicture.Visibility = System.Windows.Visibility.Collapsed;
-                cnvPlan.Visibility = System.Windows.Visibility.Visible;
+                imgBorder.Visibility = System.Windows.Visibility.Collapsed;
+                //imgPicture.Visibility = System.Windows.Visibility.Collapsed;
+                canvasBorder.Visibility = System.Windows.Visibility.Visible;
+                //cnvPlan.Visibility = System.Windows.Visibility.Visible;
                 btnPlan.Content = UI_main.hidePlan;
+
             }
             else if (btnPlan.Content == UI_main.hidePlan)
             {
-                cnvPlan.Visibility = System.Windows.Visibility.Collapsed;
-                imgPicture.Visibility = System.Windows.Visibility.Visible;
+                canvasBorder.Visibility = System.Windows.Visibility.Collapsed;
+                //cnvPlan.Visibility = System.Windows.Visibility.Collapsed;
+                imgBorder.Visibility = System.Windows.Visibility.Visible;
+                //imgPicture.Visibility = System.Windows.Visibility.Visible;
                 btnPlan.Content = UI_main.showPlan;
             }
+        }
+
+        private void dragCamera(object sender, MouseButtonEventArgs e)
+        {
+           // Image image = e.Source as Image;
+            Image image = sender as Image;
+            DataObject data = new DataObject(typeof(Image), image);
+            DragDrop.DoDragDrop(image, data, DragDropEffects.Move);
+        }
+
+        private void dropCamera(object sender, DragEventArgs e)
+        {
+            //ImageSource image = e.Data.GetData(typeof(ImageSource)) as ImageSource;
+            //Image imageControl = new Image() { Width = image.Width, Height = image.Height, Source = image };
+
+            Image image = e.Data.GetData(typeof(Image)) as Image;
+            //Image imageControl = new Image() { Width = image.Width, Height = image.Height, Source = image };
+
+            this.cnvPlan.Children.Remove(image);
+            Canvas.SetLeft(image, e.GetPosition(this.cnvPlan).X);
+            Canvas.SetTop(image, e.GetPosition(this.cnvPlan).Y);
+            this.cnvPlan.Children.Add(image);
+
+            foreach (INetworkCamera cam in ActiveCameras.cameras)
+            {
+                if (cam.ID == image.Tag)
+                {
+                    cam.X = e.GetPosition(this.cnvPlan).X;
+                    cam.Y = e.GetPosition(this.cnvPlan).Y;
+                }
+            }
+            lblResolution.Content = image.Name;
+           
         }
     }
 }

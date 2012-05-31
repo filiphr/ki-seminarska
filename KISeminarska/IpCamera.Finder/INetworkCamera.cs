@@ -59,12 +59,12 @@ namespace IpCamera.Controler
         /// <summary>
         /// Image location - X coord
         /// </summary>
-        int X { get; set; }
+        double X { get; set; }
 
         /// <summary>
         /// Image location - Y coord
         /// </summary>
-        int Y { get; set; }
+        double Y { get; set; }
 
         /// <summary>
         /// Camera network credentials

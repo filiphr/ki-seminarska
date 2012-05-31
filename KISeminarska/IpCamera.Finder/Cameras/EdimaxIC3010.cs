@@ -85,12 +85,12 @@ namespace IpCamera.Controler.Cameras
         /// <summary>
         /// Image location - X coord
         /// </summary>
-        public int X { get; set; }
+        public double X { get; set; }
 
         /// <summary>
         /// Image location - Y coord
         /// </summary>
-        public int Y { get; set; }
+        public double Y { get; set; }
 
         /// <summary>
         /// Camera network credentials
@@ -121,8 +121,8 @@ namespace IpCamera.Controler.Cameras
             this.connected = newConnected;
             this.description = string.Empty;
             this.credentials = new NetworkCredential("admin", "1234");
-            this.X = 200;
-            this.Y = 600;
+            this.X = 0;
+            this.Y = 0;
         }
 
         /// <summary>
@@ -143,8 +143,8 @@ namespace IpCamera.Controler.Cameras
             this.credentials = new NetworkCredential();
             this.credentials.UserName = (string)info.GetValue("username", typeof(string));
             this.credentials.Password = (string)info.GetValue("password", typeof(string));
-            this.X = (int)info.GetValue("X", typeof(int));
-            this.Y = (int)info.GetValue("Y", typeof(int));
+            this.X = (double)info.GetValue("X", typeof(double));
+            this.Y = (double)info.GetValue("Y", typeof(double));
         }
 
         #endregion Constructors
