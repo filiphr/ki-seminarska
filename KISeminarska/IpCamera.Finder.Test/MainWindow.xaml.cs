@@ -37,6 +37,7 @@ namespace IpCamera.Finder.Test
             btnEdit.Content = UI_main.btnEdit;
             btnSave.Content = UI_main.btnSave;
             btnLoad.Content = UI_main.btnLoad;
+            btnPlan.Content = UI_main.showPlan;
         }
 
         private void btnDetectCameras_Click(object sender, RoutedEventArgs e)
@@ -203,6 +204,22 @@ namespace IpCamera.Finder.Test
                 }
             }
             fillCameras();
+        }
+
+        private void btnPlan_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnPlan.Content == UI_main.showPlan)
+            {
+                imgPicture.Visibility = System.Windows.Visibility.Collapsed;
+                cnvPlan.Visibility = System.Windows.Visibility.Visible;
+                btnPlan.Content = UI_main.hidePlan;
+            }
+            else if (btnPlan.Content == UI_main.hidePlan)
+            {
+                cnvPlan.Visibility = System.Windows.Visibility.Collapsed;
+                imgPicture.Visibility = System.Windows.Visibility.Visible;
+                btnPlan.Content = UI_main.showPlan;
+            }
         }
     }
 }

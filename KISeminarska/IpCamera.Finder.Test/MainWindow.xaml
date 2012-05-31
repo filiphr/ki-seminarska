@@ -8,9 +8,11 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="7">
-            <Image Name="imgPicture" Stretch="Uniform" Grid.Column="1" />
+            <Image Name="imgPicture" Stretch="Uniform"/>
         </Border>
-
+        <Canvas Name="cnvPlan" Grid.Column="2" Visibility="Collapsed">
+            <Image Name="imgCamera" Source="activeCamera.png"></Image>
+        </Canvas>
         <Grid Grid.Column="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -52,11 +54,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Button Name="btnTakePicture" IsEnabled="False" Click="btnTakePicture_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5"  />
                 <Button Name="btnEdit" IsEnabled="False" Click="btnEdit_Click" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5" />
                 <Button Name="btnSave" Click="btnSave_Click" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" />
                 <Button Name="btnLoad" Click="btnLoad_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"/>
+                <Button Name="btnPlan" Click="btnPlan_Click" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5"/>
             </Grid>
         </Grid>
     </Grid>
