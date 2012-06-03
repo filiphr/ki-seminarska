@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using IpCamera.Controler;
+using Microsoft.Win32;
 
 namespace IpCamera.Finder.Test
 {
@@ -27,6 +28,7 @@ namespace IpCamera.Finder.Test
         private static string dir = Directory.GetCurrentDirectory();
         private static string inactiveCameraPath = Path.Combine(dir, "inactiveCamera.png");
         private static string activeCameraPath = Path.Combine(dir, "activeCamera.png");
+        private static string PlanPath = Path.Combine(dir, "activeCamera.png");
 
         public MainWindow()
         {
@@ -43,6 +45,7 @@ namespace IpCamera.Finder.Test
             btnSave.Content = UI_main.btnSave;
             btnLoad.Content = UI_main.btnLoad;
             btnPlan.Content = UI_main.showPlan;
+            btnLoadPlan.Content = UI_main.btnLoadPlan;
         }
 
         private void btnDetectCameras_Click(object sender, RoutedEventArgs e)
@@ -71,12 +74,36 @@ namespace IpCamera.Finder.Test
 
         private void cbCameras_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            foreach (UIElement element in cnvPlan.Children)
+            {
+                if (element is Image)
+                {
+                    Image img = element as Image;
+                    BitmapImage bmpInactive = new BitmapImage(new Uri(inactiveCameraPath));
+                    img.Source = bmpInactive;
+                }
+            }
+
+
             if (cbCameras.SelectedIndex > 0)
             {
                 selectedCameraIndex = cbCameras.SelectedIndex - 1;
                 fillInfo();
                 btnTakePicture.IsEnabled = true;
                 btnEdit.IsEnabled = true;
+                foreach (UIElement element in cnvPlan.Children)
+                {
+                    if (element is Image)
+                    {
+                        Image img = element as Image;
+                        if (img.Tag.Equals(ActiveCameras.cameras[selectedCameraIndex].ID))
+                        {
+                            BitmapImage bmpActive = new BitmapImage(new Uri(activeCameraPath));
+                            img.Source=bmpActive;
+                        }
+                    }
+                }
             }
             else
             {
@@ -288,6 +315,28 @@ namespace IpCamera.Finder.Test
                     cam.Y = e.GetPosition(this.cnvPlan).Y;
                 }
             }
+        }
+
+        private void btnLoadPlan_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.DefaultExt = ".jpg";
+            dlg.Filter = "Images (.jpg)|*.jpg";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                tbDescription.Text = filename;
+                PlanPath = filename;
+                BitmapImage bmpPlan = new BitmapImage(new Uri(PlanPath));
+               // cnvPlan.Background = bmpPlan;
+            }
+
+
         }
     }
 }

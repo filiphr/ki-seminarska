@@ -159,4 +159,7 @@
   <data name="showPlan" xml:space="preserve">
     <value>Show Plan</value>
   </data>
+  <data name="btnLoadPlan" xml:space="preserve">
+    <value>Load Plan</value>
+  </data>
 </root>

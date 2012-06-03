@@ -62,7 +62,8 @@
                 <Button Name="btnEdit" IsEnabled="False" Click="btnEdit_Click" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5" />
                 <Button Name="btnSave" Click="btnSave_Click" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" />
                 <Button Name="btnLoad" Click="btnLoad_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"/>
-                <Button Name="btnPlan" Click="btnPlan_Click" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5"/>
+                <Button Name="btnLoadPlan" Click="btnLoadPlan_Click" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5"/>
+                <Button Name="btnPlan" Click="btnPlan_Click" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5"/>
             </Grid>
         </Grid>
     </Grid>

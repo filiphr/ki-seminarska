@@ -88,6 +88,15 @@ namespace IpCamera.Finder.Test {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load Plan.
+        /// </summary>
+        internal static string btnLoadPlan {
+            get {
+                return ResourceManager.GetString("btnLoadPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string btnSave {
