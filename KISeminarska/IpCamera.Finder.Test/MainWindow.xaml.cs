@@ -67,7 +67,8 @@ namespace IpCamera.Finder.Test
         {
             INetworkCamera camera = ActiveCameras.cameras[selectedCameraIndex];
             Image picture = new Image();
-            BitmapSource bs = BitmapConversion.ToWpfBitmap(camera.TakePicture());
+            //BitmapSource bs = BitmapConversion.ToWpfBitmap(camera.TakePicture());
+            BitmapSource bs = (camera.TakePicture()).ToWpfBitmap();
             picture.Source = bs;
             imgPicture.Source = bs;
         }
@@ -325,18 +326,32 @@ namespace IpCamera.Finder.Test
 
             Nullable<bool> result = dlg.ShowDialog();
 
-            // Process open file dialog box results
             if (result == true)
             {
-                // Open document
-                string filename = dlg.FileName;
-                tbDescription.Text = filename;
-                PlanPath = filename;
-                BitmapImage bmpPlan = new BitmapImage(new Uri(PlanPath));
-               // cnvPlan.Background = bmpPlan;
+                byte[] buffer = new byte[100000];
+                int read, total = 0;
+
+                using (Stream stream = dlg.OpenFile())
+                {
+                    // read data from stream
+                    StreamReader reader = new StreamReader(stream);
+                    while ((read = stream.Read(buffer, total, 1000)) != 0)
+                    {
+                        total += read;
+                    }
+                    
+                    System.Drawing.Bitmap plan2;
+                    plan2 = (System.Drawing.Bitmap) System.Drawing.Bitmap.FromStream(new MemoryStream(buffer, 0, total));
+
+                    ImageBrush imgBr = new ImageBrush(plan2.ToWpfBitmap());
+                    imgBr.Stretch = Stretch.Fill;
+                    cnvPlan.Background = imgBr;
+
+                    stream.Close();
+                    reader.Close();
+                }
+
             }
-
-
         }
     }
 }
