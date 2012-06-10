@@ -298,7 +298,6 @@ namespace IpCamera.Controler.Cameras
                         StreamReader reader = new StreamReader(stream);
                         String read = reader.ReadLine();
                         String[] tmp = read.Split('=');
-                        //TODO: change this to the camera model so it's more specific
                         return tmp[1] == "EDIMAX";
                     }
                 }
@@ -339,7 +338,7 @@ namespace IpCamera.Controler.Cameras
         {
             string testURL = string.Format(BrandURL_IP0, IP);
             HttpWebRequest requestModel = (HttpWebRequest)WebRequest.Create(testURL);
-            requestModel.Credentials = new NetworkCredential("admin", "1234");
+            requestModel.Credentials = this.credentials;
             requestModel.Timeout = 1500;
             HttpWebResponse responseModel = (HttpWebResponse)requestModel.GetResponse();
             using (Stream stream = responseModel.GetResponseStream())

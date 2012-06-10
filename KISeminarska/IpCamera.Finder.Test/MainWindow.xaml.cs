@@ -101,7 +101,7 @@ namespace IpCamera.Finder.Test
                         if (img.Tag.Equals(ActiveCameras.cameras[selectedCameraIndex].ID))
                         {
                             BitmapImage bmpActive = new BitmapImage(new Uri(activeCameraPath));
-                            img.Source=bmpActive;
+                            img.Source = bmpActive;
                         }
                     }
                 }
@@ -170,8 +170,8 @@ namespace IpCamera.Finder.Test
                 }
                 image.Tag = ActiveCameras.cameras[i].ID;
                 image.MouseLeftButtonDown += new MouseButtonEventHandler(dragCamera);
-                Canvas.SetLeft(image, ActiveCameras.cameras[i].X);
-                Canvas.SetTop(image, ActiveCameras.cameras[i].Y);
+                Canvas.SetLeft(image, ActiveCameras.cameras[i].X - image.ActualHeight / 2);
+                Canvas.SetTop(image, ActiveCameras.cameras[i].Y - image.ActualWidth / 2);
                 this.cnvPlan.Children.Add(image);
             }
         }
@@ -240,6 +240,18 @@ namespace IpCamera.Finder.Test
                 {
                     selectedCameraIndex = -1;
                     fillCameras();
+                    List<UIElement> tmp = new List<UIElement>();
+                    foreach (UIElement element in cnvPlan.Children)
+                    {
+                        if (element is Image)
+                        {
+                            tmp.Add(element);
+                        }
+                    }
+                    foreach (UIElement element in tmp)
+                    {
+                        cnvPlan.Children.Remove(element);
+                    }
                     drawCameras();
                     btnTakePicture.IsEnabled = false;
                     btnEdit.IsEnabled = false;
@@ -269,27 +281,22 @@ namespace IpCamera.Finder.Test
 
         private void btnPlan_Click(object sender, RoutedEventArgs e)
         {
-            if (btnPlan.Content == UI_main.showPlan)
+            if (btnPlan.Content.Equals(UI_main.showPlan))
             {
                 imgBorder.Visibility = System.Windows.Visibility.Collapsed;
-                //imgPicture.Visibility = System.Windows.Visibility.Collapsed;
                 canvasBorder.Visibility = System.Windows.Visibility.Visible;
-                //cnvPlan.Visibility = System.Windows.Visibility.Visible;
                 btnPlan.Content = UI_main.hidePlan;
             }
-            else if (btnPlan.Content == UI_main.hidePlan)
+            else if (btnPlan.Content.Equals(UI_main.hidePlan))
             {
                 canvasBorder.Visibility = System.Windows.Visibility.Collapsed;
-                //cnvPlan.Visibility = System.Windows.Visibility.Collapsed;
                 imgBorder.Visibility = System.Windows.Visibility.Visible;
-                //imgPicture.Visibility = System.Windows.Visibility.Visible;
                 btnPlan.Content = UI_main.showPlan;
             }
         }
 
         private void dragCamera(object sender, MouseButtonEventArgs e)
         {
-            // Image image = e.Source as Image;
             Image image = sender as Image;
             DataObject data = new DataObject(typeof(Image), image);
             DragDrop.DoDragDrop(image, data, DragDropEffects.Move);
@@ -297,12 +304,7 @@ namespace IpCamera.Finder.Test
 
         private void dropCamera(object sender, DragEventArgs e)
         {
-            //ImageSource image = e.Data.GetData(typeof(ImageSource)) as ImageSource;
-            //Image imageControl = new Image() { Width = image.Width, Height = image.Height, Source = image };
-
             Image image = e.Data.GetData(typeof(Image)) as Image;
-            //Image imageControl = new Image() { Width = image.Width, Height = image.Height, Source = image };
-
             this.cnvPlan.Children.Remove(image);
             Canvas.SetLeft(image, e.GetPosition(this.cnvPlan).X);
             Canvas.SetTop(image, e.GetPosition(this.cnvPlan).Y);
@@ -310,7 +312,7 @@ namespace IpCamera.Finder.Test
 
             foreach (INetworkCamera cam in ActiveCameras.cameras)
             {
-                if (cam.ID == image.Tag)
+                if (cam.ID.Equals((string)image.Tag))
                 {
                     cam.X = e.GetPosition(this.cnvPlan).X;
                     cam.Y = e.GetPosition(this.cnvPlan).Y;
@@ -333,15 +335,14 @@ namespace IpCamera.Finder.Test
 
                 using (Stream stream = dlg.OpenFile())
                 {
-                    // read data from stream
                     StreamReader reader = new StreamReader(stream);
                     while ((read = stream.Read(buffer, total, 1000)) != 0)
                     {
                         total += read;
                     }
-                    
+
                     System.Drawing.Bitmap plan2;
-                    plan2 = (System.Drawing.Bitmap) System.Drawing.Bitmap.FromStream(new MemoryStream(buffer, 0, total));
+                    plan2 = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromStream(new MemoryStream(buffer, 0, total));
 
                     ImageBrush imgBr = new ImageBrush(plan2.ToWpfBitmap());
                     imgBr.Stretch = Stretch.Fill;
