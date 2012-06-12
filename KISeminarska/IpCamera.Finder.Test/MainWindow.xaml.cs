@@ -46,6 +46,7 @@ namespace IpCamera.Finder.Test
             btnLoad.Content = UI_main.btnLoad;
             btnPlan.Content = UI_main.showPlan;
             btnLoadPlan.Content = UI_main.btnLoadPlan;
+            btnSavePic.Content = UI_main.btnSavePic;
         }
 
         private void btnDetectCameras_Click(object sender, RoutedEventArgs e)
@@ -352,6 +353,34 @@ namespace IpCamera.Finder.Test
                     reader.Close();
                 }
 
+            }
+        }
+
+        private void btnSavePic_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            Stream stream;
+
+            dlg.Filter = "jpg files (*.jpg)|*.jpg|All files (*.*)|*.*";
+            dlg.FilterIndex = 2;
+            dlg.RestoreDirectory = true;
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                if ((stream = dlg.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    //(imgPicture.Source).
+                    BitmapSource image = (BitmapSource) imgPicture.Source;
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(image));
+                    encoder.Save(stream);
+                    stream.Close();
+                }
             }
         }
     }

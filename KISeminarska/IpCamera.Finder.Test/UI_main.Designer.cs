@@ -106,6 +106,15 @@ namespace IpCamera.Finder.Test {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Picture.
+        /// </summary>
+        internal static string btnSavePic {
+            get {
+                return ResourceManager.GetString("btnSavePic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take Picture.
         /// </summary>
         internal static string btnTakePicture {

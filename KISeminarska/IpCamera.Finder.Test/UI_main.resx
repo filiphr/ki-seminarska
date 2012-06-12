@@ -162,4 +162,7 @@
   <data name="btnLoadPlan" xml:space="preserve">
     <value>Load Plan</value>
   </data>
+  <data name="btnSavePic" xml:space="preserve">
+    <value>Save Picture</value>
+  </data>
 </root>

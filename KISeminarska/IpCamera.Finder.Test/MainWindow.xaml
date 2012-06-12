@@ -57,6 +57,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Button Name="btnTakePicture" IsEnabled="False" Click="btnTakePicture_Click" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5"  />
                 <Button Name="btnEdit" IsEnabled="False" Click="btnEdit_Click" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5" />
@@ -64,6 +65,7 @@
                 <Button Name="btnLoad" Click="btnLoad_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"/>
                 <Button Name="btnLoadPlan" Click="btnLoadPlan_Click" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5"/>
                 <Button Name="btnPlan" Click="btnPlan_Click" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5"/>
+                <Button Name="btnSavePic" Click="btnSavePic_Click" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Margin="5"/>
             </Grid>
         </Grid>
     </Grid>
