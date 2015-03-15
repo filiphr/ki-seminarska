@@ -1,0 +1,1 @@
+Seminarska po Korisnicki Interfejsi, so IP Kamerio
